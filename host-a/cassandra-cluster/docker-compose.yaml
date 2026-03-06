@@ -1,0 +1,35 @@
+version: "3.9"
+
+x-cassandra-defaults: &cassandra-defaults
+  environment:
+    MAX_HEAP_SIZE: 512M
+    HEAP_NEWSIZE: 128M
+
+services:
+  cassandra-1:
+    build: ./cassandra-1
+    container_name: cassandra-1
+    <<: *cassandra-defaults
+    networks:
+      cassandra_network:
+        ipv4_address: 192.168.1.200
+
+  cassandra-2:
+    image: cassandra:latest
+    container_name: cassandra-2
+    <<: *cassandra-defaults
+    networks:
+      cassandra_network:
+        ipv4_address: 192.168.1.201
+
+  cassandra-3:
+    image: cassandra:latest
+    container_name: cassandra-3
+    <<: *cassandra-defaults
+    networks:
+      cassandra_network:
+        ipv4_address: 192.168.1.202
+
+networks:
+  cassandra_network:
+    external: true
