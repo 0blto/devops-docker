@@ -31,17 +31,15 @@ sudo systemctl enable --now ssh
 sudo apt install -y docker.io docker-compose-v2
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
-newgrp docker
+sudo chmod 666 /var/run/docker.sock
 
-docker network create -d ipvlan \
+sudo docker network create -d ipvlan \
     --subnet=192.168.1.0/24 \
     --gateway=192.168.1.1 \
     -o parent=$INTERFACE \
     cassandra_network
 
-cd cassandra-cluster
-docker compose up -d
-cd ..
+docker compose -f ./cassandra-cluster/docker-compose.yaml up -d
 
 sudo ip link add ipvlan-shim link $INTERFACE type ipvlan mode l2
 sudo ip addr add 192.168.1.250/24 dev ipvlan-shim

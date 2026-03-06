@@ -382,3 +382,25 @@ cqlsh>
 ## 7. Скрипты
 
 Для удобства в host-a и host-b есть скрипты setup.sh для каждой из машин и необходимые файловые структуры, после их выполнения можно сразу переходить к разделам 4 и 5.
+
+Установка git
+```bash
+sudo apt update
+sudo apt install -y git
+```
+
+Клонирование репозитория
+```bash
+git clone https://github.com/0blto/devops-docker.git
+```
+
+Перед запуском скрипта задать права
+```bash
+cd devops-docker/host-a # devops-docker/host-b для иашины B
+chmod +x setup.sh
+```
+
+Перед запуском узнать имя основного сетевого интерфейса через `ip addr`, его необходимо передать в аргумент скрипту
+```bash
+./setup.sh <имя сетевого интерфейса>
+```
